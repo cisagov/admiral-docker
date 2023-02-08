@@ -21,7 +21,10 @@ ARG CISA_UID=421
 ARG CISA_GID=${CISA_UID}
 ARG CISA_USER="cisa"
 ENV CISA_GROUP=${CISA_USER}
-ENV CISA_HOME="/home/${CISA_USER}"
+ENV CISA_HOME="/home/${CISA_USER}" \
+    ADMIRAL_CONFIG_FILE="/run/secrets/admiral.yml" \
+    ADMIRAL_CONFIG_SECTION="dev-mode" \
+    ADMIRAL_WORKER_NAME="dev"
 
 ###
 # Upgrade the system
