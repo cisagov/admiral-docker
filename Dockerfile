@@ -1,4 +1,4 @@
-ARG VERSION=unspecified
+ARG VERSION=1.3.0
 
 FROM python:3.10.1-alpine
 
@@ -18,6 +18,7 @@ ARG VERSION
 # LABEL org.opencontainers.image.authors="vm-fusion-dev-group@trio.dhs.gov"
 LABEL org.opencontainers.image.authors="github@cisa.dhs.gov"
 LABEL org.opencontainers.image.vendor="Cybersecurity and Infrastructure Security Agency"
+LABEL org.opencontainers.image.version=${VERSION}
 
 ###
 # Unprivileged user setup variables
@@ -78,11 +79,10 @@ WORKDIR ${CISA_HOME}
 # slightly longer install times.
 ###
 RUN wget --output-document sourcecode.tgz \
-    https://github.com/cisagov/skeleton-python-library/archive/v${VERSION}.tar.gz \
+    https://github.com/cisagov/admiral/archive/v${VERSION}.tar.gz \
     && tar --extract --gzip --file sourcecode.tgz --strip-components=1 \
     && pip3 install --no-cache-dir --requirement requirements.txt \
     && ln -snf /run/secrets/quote.txt src/example/data/secret.txt \
-    && rm sourcecode.tgz
 
 ###
 # Prepare to run
