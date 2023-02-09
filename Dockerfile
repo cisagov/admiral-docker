@@ -84,9 +84,5 @@ RUN wget --output-document sourcecode.tgz \
 ###
 # Prepare to run
 ###
-ENV ECHO_MESSAGE="Hello World from Dockerfile"
 USER ${CISA_USER}:${CISA_GROUP}
-EXPOSE 8080/TCP
-VOLUME ["/var/log"]
-ENTRYPOINT ["example"]
-CMD ["--log-level", "DEBUG"]
+ENTRYPOINT ["admiral"]
