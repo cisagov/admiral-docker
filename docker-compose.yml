@@ -4,8 +4,14 @@ version: "3.7"
 # This Docker composition file is used to build and test the container
 
 secrets:
-  quote_txt:
-    file: ./src/secrets/quote.txt
+  admiral_yml:
+    file: ./src/secrets/admiral.yml
+  mongo_root_passwd_txt:
+    file: ./src/secrets/mongo-root-passwd.txt
+  redis_conf:
+    file: ./src/secrets/redis.conf
+  sslmate_api_key_txt:
+    file: ./src/secrets/sslmate-api-key.txt
 
 services:
   example:

@@ -78,8 +78,7 @@ WORKDIR ${CISA_HOME}
 RUN wget --output-document sourcecode.tgz \
     https://github.com/cisagov/admiral/archive/v${VERSION}.tar.gz \
     && tar --extract --gzip --file sourcecode.tgz --strip-components=1 \
-    && pip3 install --no-cache-dir --requirement requirements.txt \
-    && ln -snf /run/secrets/quote.txt src/example/data/secret.txt \
+    && pip3 install --no-cache-dir --requirement requirements.txt
 
 ###
 # Prepare to run
