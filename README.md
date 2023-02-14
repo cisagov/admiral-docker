@@ -52,47 +52,13 @@ docker run cisagov/example:0.0.1
     docker compose up --detach
     ```
 
-## Using secrets with your container ##
+## Using secrets ##
 
-This container also supports passing sensitive values via [Docker
-secrets](https://docs.docker.com/engine/swarm/secrets/).  Passing sensitive
-values like your credentials can be more secure using secrets than using
-environment variables.  See the
-[secrets](#secrets) section below for a table of all supported secret files.
-
-1. To use secrets, create a `quote.txt` file containing the values you want set:
-
-    ```text
-    Better lock it in your pocket.
-    ```
-
-1. Then add the secret to your `docker-compose.yml` file:
-
-    ```yaml
-    ---
-    version: "3.7"
-
-    secrets:
-      quote_txt:
-        file: quote.txt
-
-    services:
-      example:
-        image: cisagov/example:0.0.1
-        volumes:
-          - type: bind
-            source: <your_log_dir>
-            target: /var/log
-        environment:
-          - ECHO_MESSAGE="Hello from docker compose"
-        ports:
-          - target: 8080
-            published: 8080
-            protocol: tcp
-        secrets:
-          - source: quote_txt
-            target: quote.txt
-    ```
+This composistion passes credentials and configuration options via [Docker
+secrets](https://docs.docker.com/engine/swarm/secrets/). You need to modify
+the files listed in the [secrets](#secrets) section below. To prevent yourself
+from inadvertently committing sensitive values to the repository, run
+`git update-index --assume-unchanged src/secrets/*`.
 
 ## Updating your container ##
 
@@ -149,7 +115,7 @@ Hub for a list of all the supported tags.
 
 | Mount point | Purpose        |
 |-------------|----------------|
-| `/var/log`  |  Log storage   |
+| `mongo-init.js`  |  Stores the initialization script for MongoDB   |
 
 ## Ports ##
 
@@ -157,10 +123,10 @@ The following ports are exposed by this container:
 
 | Port | Purpose        |
 |------|----------------|
-| 8080 | Example only; nothing is actually listening on the port |
-
-The sample [Docker composition](docker-compose.yml) publishes the
-exposed port at 8080.
+| 5555 | Celery Flower |
+| 6379 | Redis |
+| 8081 | Redis Commander |
+| 8083 | Mongo Express |
 
 ## Environment variables ##
 
@@ -178,13 +144,21 @@ There are no required environment variables.
 
 | Name  | Purpose | Default |
 |-------|---------|---------|
-| `ECHO_MESSAGE` | Sets the message echoed by this container.  | `Hello World from Dockerfile` |
+| `ADMIRAL_CONFIG_FILE` | Celery configuration | `admiral.yml` |
+| `ADMIRAL_CONFIG_SECTION` | Configuration section to use  | `dev-mode` |
+| `ADMIRAL_WORKER_NAME` | Worker names | `dev` |
+| `CISA_HOME` | Home folder | `/home/cisa` |
+| `CISA_GROUP` | Group identifier | `cisa` |
 
 ## Secrets ##
 
 | Filename     | Purpose |
 |--------------|---------|
-| `quote.txt` | Replaces the secret stored in the example library's package data. |
+| `admiral.yml` | Celery configuration |
+| `mongo.yml` | MongoDB configuration |
+| `mongo-root-passwd.txt` | MongoDB root password |
+| `redis.conf` | Redis configuration |
+| `sslmate-api-key.txt` | CT Search API key |
 
 ## Building from source ##
 
