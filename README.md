@@ -15,37 +15,10 @@ scanning performed by the [admiral Python library](https://github.com/cisagov/ad
 
 ## Running ##
 
-### Running with Docker ###
-
-To run the `cisagov/example` image via Docker:
-
-```console
-docker run cisagov/example:0.0.1
-```
-
 ### Running with Docker Compose ###
 
-1. Create a `docker-compose.yml` file similar to the one below to use [Docker Compose](https://docs.docker.com/compose/).
-
-    ```yaml
-    ---
-    version: "3.7"
-
-    services:
-      example:
-        image: cisagov/example:0.0.1
-        volumes:
-          - type: bind
-            source: <your_log_dir>
-            target: /var/log
-        environment:
-          - ECHO_MESSAGE="Hello from docker compose"
-        ports:
-          - target: 8080
-            published: 8080
-            protocol: tcp
-    ```
-
+1. Change the credentials in `secrets`
+1. Choose configuration options for `admiral.yml`
 1. Start the container and detach:
 
     ```console
