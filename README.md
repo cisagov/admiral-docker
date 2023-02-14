@@ -167,8 +167,8 @@ Build the image locally using this git repository as the [build context](https:/
 ```console
 docker build \
   --build-arg VERSION=0.0.1 \
-  --tag cisagov/example:0.0.1 \
-  https://github.com/cisagov/example.git#develop
+  --tag cisagov/admiral-docker:0.0.1 \
+  https://github.com/cisagov/admiral-docker.git#develop
 ```
 
 ## Cross-platform builds ##
@@ -181,7 +181,7 @@ Docker:
    or the command line:
 
     ```console
-    git clone https://github.com/cisagov/example.git
+    git clone https://github.com/cisagov/admiral-docker.git
     cd example
     ```
 
@@ -199,7 +199,7 @@ Docker:
       --platform linux/amd64 \
       --build-arg VERSION=0.0.1 \
       --output type=docker \
-      --tag cisagov/example:0.0.1 .
+      --tag cisagov/admiral-docker:0.0.1 .
     ```
 
 ## New repositories from a skeleton ##
