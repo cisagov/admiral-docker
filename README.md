@@ -129,20 +129,20 @@ environment variables.  See the
 ## Image tags ##
 
 The images of this container are tagged with [semantic
-versions](https://semver.org) of the underlying example project that they
-containerize.  It is recommended that most users use a version tag (e.g.
-`:0.0.1`).
+versions](https://semver.org) of the [admiral](https://github.com/cisagov/admiral)
+Python library that they containerize.  It is recommended that most users
+use a version tag (e.g. `:0.0.1`).
 
 | Image:tag | Description |
 |-----------|-------------|
-|`cisagov/example:1.2.3`| An exact release version. |
-|`cisagov/example:1.2`| The most recent release matching the major and minor version numbers. |
-|`cisagov/example:1`| The most recent release matching the major version number. |
-|`cisagov/example:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
-|`cisagov/example:nightly` | A nightly build of the `develop` branch of this repository. |
-|`cisagov/example:latest`| The most recent release image pushed to a container registry.  Pulling an image using the `:latest` tag [should be avoided.](https://vsupalov.com/docker-latest-tag/) |
+|`cisagov/admiral-docker:1.2.3`| An exact release version. |
+|`cisagov/admiral-docker:1.2`| The most recent release matching the major and minor version numbers. |
+|`cisagov/admiral-docker:1`| The most recent release matching the major version number. |
+|`cisagov/admiral-docker:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
+|`cisagov/admiral-docker:nightly` | A nightly build of the `develop` branch of this repository. |
+|`cisagov/admiral-docker:latest`| The most recent release image pushed to a container registry.  Pulling an image using the `:latest` tag [should be avoided.](https://vsupalov.com/docker-latest-tag/) |
 
-See the [tags tab](https://hub.docker.com/r/cisagov/example/tags) on Docker
+See the [tags tab](https://hub.docker.com/r/cisagov/admiral-docker/tags) on Docker
 Hub for a list of all the supported tags.
 
 ## Volumes ##
