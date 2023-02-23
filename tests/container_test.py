@@ -74,7 +74,9 @@ def test_release_version():
 def test_log_version(version_container):
     """Verify the container outputs the correct version to the logs."""
     version_container.wait()  # make sure container exited if running test isolated
-    log_output = version_container.logs().decode("utf-8").strip()
+    log_output = (
+        version_container.logs(tail=1).decode("utf-8").strip()
+    )  # take only the last line
     pkg_vars = {}
     with open(VERSION_FILE) as f:
         exec(f.read(), pkg_vars)  # nosec
