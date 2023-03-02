@@ -1,4 +1,4 @@
-ARG VERSION=1.3.0
+ARG VERSION=unspecified
 
 FROM python:3.10.4-alpine
 
