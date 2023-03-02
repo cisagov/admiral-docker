@@ -49,22 +49,6 @@ from inadvertently committing sensitive values to the repository, run
     docker compose up --detach
     ```
 
-### Docker ###
-
-1. Stop the running container:
-
-    ```console
-    docker stop <container_id>
-    ```
-
-1. Pull the new image:
-
-    ```console
-    docker pull cisagov/example:0.0.1
-    ```
-
-1. Recreate and run the container by following the [previous instructions](#running-with-docker).
-
 ## Image tags ##
 
 The images of this container are tagged with [semantic
