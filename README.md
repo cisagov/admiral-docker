@@ -25,6 +25,14 @@ scanning performed by the [admiral Python library](https://github.com/cisagov/ad
     docker compose up --detach
     ```
 
+## Monitoring ##
+
+The following web services are started for monitoring the underlying components:
+
+- Celery Flower: [http://localhost:5555](http://localhost:5555)
+- Mongo Express: [http://localhost:8083](http://localhost:8083)
+- Redis Commander: [http://localhost:8082](http://localhost:8082)
+
 ## Using secrets ##
 
 This composistion passes credentials and configuration options via [Docker
