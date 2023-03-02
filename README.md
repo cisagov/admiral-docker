@@ -6,8 +6,8 @@
 
 ## Docker Image ##
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/cisagov/admiral-docker)](https://hub.docker.com/r/cisagov/admiral-docker)
-[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/cisagov/admiral-docker)](https://hub.docker.com/r/cisagov/admiral-docker)
+[![Docker Pulls](https://img.shields.io/docker/pulls/cisagov/admiral)](https://hub.docker.com/r/cisagov/admiral)
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/cisagov/admiral)](https://hub.docker.com/r/cisagov/admiral)
 [![Platforms](https://img.shields.io/badge/platforms-amd64%20%7C%20arm%2Fv6%20%7C%20arm%2Fv7%20%7C%20arm64%20%7C%20ppc64le%20%7C%20s390x-blue)](https://hub.docker.com/r/cisagov/admiral-docker/tags)
 
 This Docker project serves as the vessel for certificate transparency
@@ -66,14 +66,14 @@ use a version tag (e.g. `:1.3.0`).
 
 | Image:tag | Description |
 |-----------|-------------|
-|`cisagov/admiral-docker:1.2.3`| An exact release version. |
-|`cisagov/admiral-docker:1.2`| The most recent release matching the major and minor version numbers. |
-|`cisagov/admiral-docker:1`| The most recent release matching the major version number. |
-|`cisagov/admiral-docker:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
-|`cisagov/admiral-docker:nightly` | A nightly build of the `develop` branch of this repository. |
-|`cisagov/admiral-docker:latest`| The most recent release image pushed to a container registry.  Pulling an image using the `:latest` tag [should be avoided.](https://vsupalov.com/docker-latest-tag/) |
+|`cisagov/admiral:1.3.0`| An exact release version. |
+|`cisagov/admiral:1.3`| The most recent release matching the major and minor version numbers. |
+|`cisagov/admiral:1`| The most recent release matching the major version number. |
+|`cisagov/admiral:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
+|`cisagov/admiral:nightly` | A nightly build of the `develop` branch of this repository. |
+|`cisagov/admiral:latest`| The most recent release image pushed to a container registry.  Pulling an image using the `:latest` tag [should be avoided.](https://vsupalov.com/docker-latest-tag/) |
 
-See the [tags tab](https://hub.docker.com/r/cisagov/admiral-docker/tags) on Docker
+See the [tags tab](https://hub.docker.com/r/cisagov/admiral/tags) on Docker
 Hub for a list of all the supported tags.
 
 ## Volumes ##
@@ -132,7 +132,7 @@ Build the image locally using this git repository as the [build context](https:/
 ```console
 docker build \
   --build-arg VERSION=0.0.1 \
-  --tag cisagov/admiral-docker:0.0.1 \
+  --tag cisagov/admiral:1.3.0 \
   https://github.com/cisagov/admiral-docker.git#develop
 ```
 
@@ -164,7 +164,7 @@ Docker:
       --platform linux/amd64 \
       --build-arg VERSION=0.0.1 \
       --output type=docker \
-      --tag cisagov/admiral-docker:0.0.1 .
+      --tag cisagov/admiral:1.3.0 .
     ```
 
 ## Contributing ##
