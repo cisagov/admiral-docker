@@ -70,7 +70,7 @@ from inadvertently committing sensitive values to the repository, run
 The images of this container are tagged with [semantic
 versions](https://semver.org) of the [admiral](https://github.com/cisagov/admiral)
 Python library that they containerize.  It is recommended that most users
-use a version tag (e.g. `:0.0.1`).
+use a version tag (e.g. `:1.3.0`).
 
 | Image:tag | Description |
 |-----------|-------------|
