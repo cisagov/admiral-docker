@@ -123,7 +123,7 @@ There are no required environment variables.
 | `mongo.yml` | MongoDB configuration |
 | `mongo-root-passwd.txt` | MongoDB root password |
 | `redis.conf` | Redis configuration |
-| `sslmate-api-key.txt` | CT Search API key |
+| `sslmate-api-key.txt` | API key for SSLMate's Certificate Transparency Search API |
 
 ## Building from source ##
 
