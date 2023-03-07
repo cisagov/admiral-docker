@@ -31,9 +31,6 @@ x-admiral-template: &admiral-template
       target: admiral.yml
     - source: sslmate_api_key_txt
       target: sslmate-api-key.txt
-  # map for development only, comment out otherwise
-  # volumes:
-    # - ./src/admiral:/usr/src/admiral/admiral
 
 services:
   celery-flower:
