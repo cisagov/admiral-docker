@@ -1,6 +1,9 @@
-ARG VERSION=unspecified
+ARG PYTHON_IMAGE_VERSION=3.10.4-alpine
+ARG VERSION=1.3.0
 
-FROM python:3.10.4-alpine
+FROM tonistiigi/xx AS xx
+
+FROM python:${PYTHON_IMAGE_VERSION} as build-stage
 
 ARG VERSION
 
@@ -37,7 +40,11 @@ ENV ADMIRAL_WORKER_NAME="dev"
 # This results in a smaller final image, at the cost of slightly
 # longer install times.
 ###
+COPY --from=xx / /
 RUN apk --update --no-cache --quiet upgrade
+ARG TARGET_PLATFORM
+RUN xx-apk add --no-cache xx-c-essentials \
+    && xx-apk add libffi-dev
 
 ###
 # Create unprivileged user
@@ -54,9 +61,11 @@ RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
 ###
 ENV DEPS \
     ca-certificates \
+    make \
     openssl \
     py-pip
-RUN apk --no-cache --quiet add ${DEPS}
+ARG TARGET_PLATFORM
+RUN xx-apk --no-cache --quiet add ${DEPS}
 
 ###
 # Make sure pip, setuptools, and wheel are the latest versions
