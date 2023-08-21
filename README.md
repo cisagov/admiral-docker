@@ -62,11 +62,11 @@ from inadvertently committing sensitive values to the repository, run
 The images of this container are tagged with [semantic
 versions](https://semver.org) of the [admiral](https://github.com/cisagov/admiral)
 Python library that they containerize.  It is recommended that most users
-use a version tag (e.g. `:1.3.0`).
+use a version tag (e.g. `:1.4.0`).
 
 | Image:tag | Description |
 |-----------|-------------|
-|`cisagov/admiral:1.3.0`| An exact release version. |
+|`cisagov/admiral:1.4.0`| An exact release version. |
 |`cisagov/admiral:1.3`| The most recent release matching the major and minor version numbers. |
 |`cisagov/admiral:1`| The most recent release matching the major version number. |
 |`cisagov/admiral:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
@@ -132,7 +132,7 @@ Build the image locally using this git repository as the [build context](https:/
 ```console
 docker build \
   --build-arg VERSION=0.0.1 \
-  --tag cisagov/admiral:1.3.0 \
+  --tag cisagov/admiral:1.4.0 \
   https://github.com/cisagov/admiral-docker.git#develop
 ```
 
@@ -164,7 +164,7 @@ Docker:
       --platform linux/amd64 \
       --build-arg VERSION=0.0.1 \
       --output type=docker \
-      --tag cisagov/admiral:1.3.0 .
+      --tag cisagov/admiral:1.4.0 .
     ```
 
 ## Contributing ##
