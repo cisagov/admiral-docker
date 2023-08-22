@@ -21,7 +21,7 @@ def test_container_count(dockerc):
     """Verify the test composition and container."""
     # stopped parameter allows non-running containers in results
     assert (
-        len(dockerc.containers(stopped=True)) == 16
+        len(dockerc.compose.ps(all=True)) == 16
     ), "Wrong number of containers were started."
 
 
@@ -39,16 +39,15 @@ def test_container_count(dockerc):
 #             f'Expected "{READY_MESSAGE}" in the log within {TIMEOUT} seconds.'
 #         )
 
-
-def test_wait_for_exits(dockerc, main_container, version_container):
-    """Wait for containers to exit."""
-    # TODO: Implement this assertion. See cisagov/admiral-docker#6 for more details.
-    # assert (
-    #     dockerc.wait(main_container.id) == 0
-    # ), "Container service (main) did not exit cleanly"
-    # assert (
-    #     dockerc.wait(version_container.id) == 0
-    # ), "Container service (version) did not exit cleanly"
+# TODO: Implement this assertion. See cisagov/admiral-docker#6 for more details.
+# def test_wait_for_exits(dockerc, main_container, version_container):
+#     """Wait for containers to exit."""
+#      assert (
+#          dockerc.wait(main_container.id) == 0
+#      ), "Container service (main) did not exit cleanly"
+#      assert (
+#          dockerc.wait(version_container.id) == 0
+#      ), "Container service (version) did not exit cleanly"
 
 
 # TODO: Implement this test. See cisagov/admiral-docker#6 for more details.
@@ -76,10 +75,12 @@ def test_release_version():
 
 def test_log_version(dockerc, version_container):
     """Verify the container outputs the correct version to the logs."""
-    version_container.wait()  # make sure container exited if running test isolated
-    log_output = (
-        version_container.logs(tail=1).decode("utf-8").strip()
-    )  # take only the last line
+    dockerc.wait(
+        version_container
+    )  # make sure container exited if running test isolated
+    log_output = dockerc.logs(
+        version_container, tail=1
+    ).strip()  # take only the last line
     pkg_vars = {}
     with open(VERSION_FILE) as f:
         exec(f.read(), pkg_vars)  # nosec
