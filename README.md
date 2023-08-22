@@ -6,97 +6,40 @@
 
 ## Docker Image ##
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/cisagov/example)](https://hub.docker.com/r/cisagov/example)
-[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/cisagov/example)](https://hub.docker.com/r/cisagov/example)
+[![Docker Pulls](https://img.shields.io/docker/pulls/cisagov/admiral)](https://hub.docker.com/r/cisagov/admiral)
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/cisagov/admiral)](https://hub.docker.com/r/cisagov/admiral)
 [![Platforms](https://img.shields.io/badge/platforms-amd64%20%7C%20arm%2Fv6%20%7C%20arm%2Fv7%20%7C%20arm64%20%7C%20ppc64le%20%7C%20s390x-blue)](https://hub.docker.com/r/cisagov/admiral-docker/tags)
 
-This is a Docker skeleton project that can be used to quickly get a
-new [cisagov](https://github.com/cisagov) GitHub Docker project
-started.  This skeleton project contains [licensing
-information](LICENSE), as well as [pre-commit hooks](https://pre-commit.com)
-and [GitHub Actions](https://github.com/features/actions) configurations
-appropriate for Docker containers and the major languages that we use.
+This Docker project serves as the vessel for certificate transparency
+scanning performed by the [admiral Python library](https://github.com/cisagov/admiral).
 
 ## Running ##
 
-### Running with Docker ###
-
-To run the `cisagov/example` image via Docker:
-
-```console
-docker run cisagov/example:0.0.1
-```
-
 ### Running with Docker Compose ###
 
-1. Create a `docker-compose.yml` file similar to the one below to use [Docker Compose](https://docs.docker.com/compose/).
-
-    ```yaml
-    ---
-    version: "3.7"
-
-    services:
-      example:
-        image: cisagov/example:0.0.1
-        volumes:
-          - type: bind
-            source: <your_log_dir>
-            target: /var/log
-        environment:
-          - ECHO_MESSAGE="Hello from docker compose"
-        ports:
-          - target: 8080
-            published: 8080
-            protocol: tcp
-    ```
-
+1. Change the credentials in `secrets`
+1. Choose configuration options for `admiral.yml`
 1. Start the container and detach:
 
     ```console
     docker compose up --detach
     ```
 
-## Using secrets with your container ##
+## Monitoring ##
 
-This container also supports passing sensitive values via [Docker
-secrets](https://docs.docker.com/engine/swarm/secrets/).  Passing sensitive
-values like your credentials can be more secure using secrets than using
-environment variables.  See the
-[secrets](#secrets) section below for a table of all supported secret files.
+The following web services are started for monitoring the underlying components:
 
-1. To use secrets, create a `quote.txt` file containing the values you want set:
+- Celery Flower: [http://localhost:5555](http://localhost:5555)
+- Mongo Express: [http://localhost:8083](http://localhost:8083)
+- Redis Commander: [http://localhost:8082](http://localhost:8082)
 
-    ```text
-    Better lock it in your pocket.
-    ```
+## Using secrets ##
 
-1. Then add the secret to your `docker-compose.yml` file:
-
-    ```yaml
-    ---
-    version: "3.7"
-
-    secrets:
-      quote_txt:
-        file: quote.txt
-
-    services:
-      example:
-        image: cisagov/example:0.0.1
-        volumes:
-          - type: bind
-            source: <your_log_dir>
-            target: /var/log
-        environment:
-          - ECHO_MESSAGE="Hello from docker compose"
-        ports:
-          - target: 8080
-            published: 8080
-            protocol: tcp
-        secrets:
-          - source: quote_txt
-            target: quote.txt
-    ```
+This composistion passes credentials and configuration options via [Docker
+secrets](https://docs.docker.com/engine/swarm/secrets/). You need to modify
+the files listed in the [secrets](#secrets) section below. To prevent yourself
+from inadvertently committing sensitive values to the repository, run
+`git update-index --assume-unchanged src/secrets/*`.
 
 ## Updating your container ##
 
@@ -114,46 +57,30 @@ environment variables.  See the
     docker compose up --detach
     ```
 
-### Docker ###
-
-1. Stop the running container:
-
-    ```console
-    docker stop <container_id>
-    ```
-
-1. Pull the new image:
-
-    ```console
-    docker pull cisagov/example:0.0.1
-    ```
-
-1. Recreate and run the container by following the [previous instructions](#running-with-docker).
-
 ## Image tags ##
 
 The images of this container are tagged with [semantic
-versions](https://semver.org) of the underlying example project that they
-containerize.  It is recommended that most users use a version tag (e.g.
-`:0.0.1`).
+versions](https://semver.org) of the [admiral](https://github.com/cisagov/admiral)
+Python library that they containerize.  It is recommended that most users
+use a version tag (e.g. `:1.4.0`).
 
 | Image:tag | Description |
 |-----------|-------------|
-|`cisagov/example:1.2.3`| An exact release version. |
-|`cisagov/example:1.2`| The most recent release matching the major and minor version numbers. |
-|`cisagov/example:1`| The most recent release matching the major version number. |
-|`cisagov/example:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
-|`cisagov/example:nightly` | A nightly build of the `develop` branch of this repository. |
-|`cisagov/example:latest`| The most recent release image pushed to a container registry.  Pulling an image using the `:latest` tag [should be avoided.](https://vsupalov.com/docker-latest-tag/) |
+|`cisagov/admiral:1.4.0`| An exact release version. |
+|`cisagov/admiral:1.3`| The most recent release matching the major and minor version numbers. |
+|`cisagov/admiral:1`| The most recent release matching the major version number. |
+|`cisagov/admiral:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
+|`cisagov/admiral:nightly` | A nightly build of the `develop` branch of this repository. |
+|`cisagov/admiral:latest`| The most recent release image pushed to a container registry.  Pulling an image using the `:latest` tag [should be avoided.](https://vsupalov.com/docker-latest-tag/) |
 
-See the [tags tab](https://hub.docker.com/r/cisagov/example/tags) on Docker
+See the [tags tab](https://hub.docker.com/r/cisagov/admiral/tags) on Docker
 Hub for a list of all the supported tags.
 
 ## Volumes ##
 
 | Mount point | Purpose        |
 |-------------|----------------|
-| `/var/log`  |  Log storage   |
+| `mongo-init.js`  |  Stores the initialization script for MongoDB   |
 
 ## Ports ##
 
@@ -161,10 +88,10 @@ The following ports are exposed by this container:
 
 | Port | Purpose        |
 |------|----------------|
-| 8080 | Example only; nothing is actually listening on the port |
-
-The sample [Docker composition](docker-compose.yml) publishes the
-exposed port at 8080.
+| 5555 | Celery Flower |
+| 6379 | Redis |
+| 8081 | Redis Commander |
+| 8083 | Mongo Express |
 
 ## Environment variables ##
 
@@ -182,13 +109,21 @@ There are no required environment variables.
 
 | Name  | Purpose | Default |
 |-------|---------|---------|
-| `ECHO_MESSAGE` | Sets the message echoed by this container.  | `Hello World from Dockerfile` |
+| `ADMIRAL_CONFIG_FILE` | Celery configuration | `admiral.yml` |
+| `ADMIRAL_CONFIG_SECTION` | Configuration section to use  | `dev-mode` |
+| `ADMIRAL_WORKER_NAME` | Worker names | `dev` |
+| `CISA_HOME` | Home folder | `/home/cisa` |
+| `CISA_GROUP` | Group identifier | `cisa` |
 
 ## Secrets ##
 
 | Filename     | Purpose |
 |--------------|---------|
-| `quote.txt` | Replaces the secret stored in the example library's package data. |
+| `admiral.yml` | Celery configuration |
+| `mongo.yml` | MongoDB configuration |
+| `mongo-root-passwd.txt` | MongoDB root password |
+| `redis.conf` | Redis configuration |
+| `sslmate-api-key.txt` | API key for SSLMate's Certificate Transparency Search API |
 
 ## Building from source ##
 
@@ -197,8 +132,8 @@ Build the image locally using this git repository as the [build context](https:/
 ```console
 docker build \
   --build-arg VERSION=0.0.1 \
-  --tag cisagov/example:0.0.1 \
-  https://github.com/cisagov/example.git#develop
+  --tag cisagov/admiral:1.4.0 \
+  https://github.com/cisagov/admiral-docker.git#develop
 ```
 
 ## Cross-platform builds ##
@@ -211,7 +146,7 @@ Docker:
    or the command line:
 
     ```console
-    git clone https://github.com/cisagov/example.git
+    git clone https://github.com/cisagov/admiral-docker.git
     cd example
     ```
 
@@ -229,15 +164,8 @@ Docker:
       --platform linux/amd64 \
       --build-arg VERSION=0.0.1 \
       --output type=docker \
-      --tag cisagov/example:0.0.1 .
+      --tag cisagov/admiral:1.4.0 .
     ```
-
-## New repositories from a skeleton ##
-
-Please see our [Project Setup guide](https://github.com/cisagov/development-guide/tree/develop/project_setup)
-for step-by-step instructions on how to start a new repository from
-a skeleton. This will save you time and effort when configuring a
-new repository!
 
 ## Contributing ##
 

@@ -3,7 +3,6 @@
 
 # Standard Python Libraries
 import os
-import time
 
 # Third-Party Libraries
 import pytest
@@ -22,40 +21,42 @@ def test_container_count(dockerc):
     """Verify the test composition and container."""
     # stopped parameter allows non-running containers in results
     assert (
-        len(dockerc.compose.ps(all=True)) == 2
+        len(dockerc.compose.ps(all=True)) == 16
     ), "Wrong number of containers were started."
 
 
-def test_wait_for_ready(main_container):
-    """Wait for container to be ready."""
-    TIMEOUT = 10
-    for i in range(TIMEOUT):
-        if READY_MESSAGE in main_container.logs():
-            break
-        time.sleep(1)
-    else:
-        raise Exception(
-            f"Container does not seem ready.  "
-            f'Expected "{READY_MESSAGE}" in the log within {TIMEOUT} seconds.'
-        )
+# TODO: Implement this test. See cisagov/admiral-docker#6 for more details.
+# def test_wait_for_ready(main_container):
+#     """Wait for container to be ready."""
+#     TIMEOUT = 10
+#     for i in range(TIMEOUT):
+#         if READY_MESSAGE in main_container.logs():
+#             break
+#         time.sleep(1)
+#     else:
+#         raise Exception(
+#             f"Container does not seem ready.  "
+#             f'Expected "{READY_MESSAGE}" in the log within {TIMEOUT} seconds.'
+#         )
+
+# TODO: Implement this assertion. See cisagov/admiral-docker#6 for more details.
+# def test_wait_for_exits(dockerc, main_container, version_container):
+#     """Wait for containers to exit."""
+#      assert (
+#          dockerc.wait(main_container.id) == 0
+#      ), "Container service (main) did not exit cleanly"
+#      assert (
+#          dockerc.wait(version_container.id) == 0
+#      ), "Container service (version) did not exit cleanly"
 
 
-def test_wait_for_exits(dockerc, main_container, version_container):
-    """Wait for containers to exit."""
-    assert (
-        dockerc.wait(main_container.id) == 0
-    ), "Container service (main) did not exit cleanly"
-    assert (
-        dockerc.wait(version_container.id) == 0
-    ), "Container service (version) did not exit cleanly"
-
-
-def test_output(dockerc, main_container):
-    """Verify the container had the correct output."""
-    # make sure container exited if running test isolated
-    dockerc.wait(main_container.id)
-    log_output = main_container.logs()
-    assert SECRET_QUOTE in log_output, "Secret not found in log output."
+# TODO: Implement this test. See cisagov/admiral-docker#6 for more details.
+# def test_output(dockerc, main_container):
+#     """Verify the container had the correct output."""
+#     # make sure container exited if running test isolated
+#     dockerc.wait(main_container.id)
+#     log_output = main_container.logs()
+#     assert SECRET_QUOTE in log_output, "Secret not found in log output."
 
 
 @pytest.mark.skipif(
@@ -74,9 +75,12 @@ def test_release_version():
 
 def test_log_version(dockerc, version_container):
     """Verify the container outputs the correct version to the logs."""
-    # make sure container exited if running test isolated
-    dockerc.wait(version_container.id)
-    log_output = version_container.logs().strip()
+    dockerc.wait(
+        version_container
+    )  # make sure container exited if running test isolated
+    log_output = dockerc.logs(
+        version_container, tail=1
+    ).strip()  # take only the last line
     pkg_vars = {}
     with open(VERSION_FILE) as f:
         exec(f.read(), pkg_vars)  # nosec

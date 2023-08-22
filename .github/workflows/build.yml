@@ -27,10 +27,13 @@ on:
 env:
   BUILDX_CACHE_DIR: ~/.cache/buildx
   CURL_CACHE_DIR: ~/.cache/curl
-  IMAGE_NAME: cisagov/example
+  IMAGE_NAME: cisagov/admiral
   PIP_CACHE_DIR: ~/.cache/pip
-  PLATFORMS: "linux/amd64,linux/arm/v6,linux/arm/v7,\
-  linux/arm64,linux/ppc64le,linux/s390x"
+  # Support was dropped for the other platforms inherited from
+  # https://github.com/cisagov/skeleton-docker because they require a rust
+  # compiler. There are designs to fix this issue in the skeleton, after which
+  # the platforms can be reinstated. See #8 for the current status.
+  PLATFORMS: "linux/amd64, linux/arm64"
   PRE_COMMIT_CACHE_DIR: ~/.cache/pre-commit
   RUN_TMATE: ${{ secrets.RUN_TMATE }}
 

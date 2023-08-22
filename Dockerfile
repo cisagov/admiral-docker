@@ -1,6 +1,9 @@
-ARG VERSION=unspecified
+ARG PYTHON_IMAGE_VERSION=3.11.2-alpine
+ARG VERSION=1.4.0
 
-FROM python:3.11.4-alpine
+FROM tonistiigi/xx AS xx
+
+FROM python:${PYTHON_IMAGE_VERSION} as build-stage
 
 ARG VERSION
 
@@ -10,14 +13,9 @@ ARG VERSION
 #
 # Note: Additional labels are added by the build workflow.
 ###
-# github@cisa.dhs.gov is a very generic email distribution, and it is
-# unlikely that anyone on that distribution is familiar with the
-# particulars of your repository.  It is therefore *strongly*
-# suggested that you use an email address here that is specific to the
-# person or group that maintains this repository; for example:
-# LABEL org.opencontainers.image.authors="vm-fusion-dev-group@trio.dhs.gov"
-LABEL org.opencontainers.image.authors="github@cisa.dhs.gov"
+LABEL org.opencontainers.image.authors="alexander.king@cisa.dhs.gov"
 LABEL org.opencontainers.image.vendor="Cybersecurity and Infrastructure Security Agency"
+LABEL org.opencontainers.image.version=${VERSION}
 
 ###
 # Unprivileged user setup variables
@@ -29,13 +27,24 @@ ENV CISA_GROUP=${CISA_USER}
 ENV CISA_HOME="/home/${CISA_USER}"
 
 ###
+# Admiral configuration variables
+###
+ENV ADMIRAL_CONFIG_FILE="/run/secrets/admiral.yml"
+ENV ADMIRAL_CONFIG_SECTION="dev-mode"
+ENV ADMIRAL_WORKER_NAME="dev"
+
+###
 # Upgrade the system
 #
 # Note that we use apk --no-cache to avoid writing to a local cache.
 # This results in a smaller final image, at the cost of slightly
 # longer install times.
 ###
+COPY --from=xx / /
 RUN apk --update --no-cache --quiet upgrade
+ARG TARGET_PLATFORM
+RUN xx-apk add --no-cache xx-c-essentials \
+    && xx-apk add libffi-dev
 
 ###
 # Create unprivileged user
@@ -52,9 +61,11 @@ RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
 ###
 ENV DEPS \
     ca-certificates \
+    make \
     openssl \
     py-pip
-RUN apk --no-cache --quiet add ${DEPS}
+ARG TARGET_PLATFORM
+RUN xx-apk --no-cache --quiet add ${DEPS}
 
 ###
 # Make sure pip, setuptools, and wheel are the latest versions
@@ -78,18 +89,12 @@ WORKDIR ${CISA_HOME}
 # slightly longer install times.
 ###
 RUN wget --output-document sourcecode.tgz \
-    https://github.com/cisagov/skeleton-python-library/archive/v${VERSION}.tar.gz \
+    https://github.com/cisagov/admiral/archive/v${VERSION}.tar.gz \
     && tar --extract --gzip --file sourcecode.tgz --strip-components=1 \
-    && pip3 install --no-cache-dir --requirement requirements.txt \
-    && ln -snf /run/secrets/quote.txt src/example/data/secret.txt \
-    && rm sourcecode.tgz
+    && pip3 install --no-cache-dir --requirement requirements.txt
 
 ###
 # Prepare to run
 ###
-ENV ECHO_MESSAGE="Hello World from Dockerfile"
 USER ${CISA_USER}:${CISA_GROUP}
-EXPOSE 8080/TCP
-VOLUME ["/var/log"]
-ENTRYPOINT ["example"]
-CMD ["--log-level", "DEBUG"]
+ENTRYPOINT ["admiral"]
