@@ -1,5 +1,5 @@
 ARG PYTHON_IMAGE_VERSION=3.11.2-alpine
-ARG VERSION=1.3.0
+ARG VERSION=1.4.0
 
 FROM tonistiigi/xx AS xx
 
