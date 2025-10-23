@@ -48,16 +48,24 @@ jobs:
                   "description": "The supported platforms for the Docker image.",
                   "name": "image-platforms",
                   "value": [
-                      "linux/386",
+                      # Support was dropped for the other platforms
+                      # inherited from
+                      # https://github.com/cisagov/skeleton-docker
+                      # because they require a rust compiler. There
+                      # are designs to fix this issue in the skeleton,
+                      # after which the platforms can be
+                      # reinstated. See #8 for the current status.
+                      # "linux/386",
                       "linux/amd64",
-                      "linux/arm/v6",
-                      "linux/arm/v7",
+                      # "linux/arm/v6",
+                      # "linux/arm/v7",
                       "linux/arm64",
-                      "linux/ppc64le",
-                      # This hardware platform is not supported by the
+                      # "linux/ppc64le",
+                      # In addition to the concern mentioned above,
+                      # this hardware platform is not supported by the
                       # Docker image we use as a base image.
                       # "linux/riscv64",
-                      "linux/s390x",
+                      # "linux/s390x",
                   ],
               },
           ]
