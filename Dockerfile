@@ -5,7 +5,7 @@ ARG VERSION=1.4.0
 # images are in the form <user>/<app>.
 FROM docker.io/tonistiigi/xx AS xx
 
-FROM docker.io/library/python:${PYTHON_IMAGE_VERSION} as build-stage
+FROM docker.io/library/python:${PYTHON_IMAGE_VERSION} AS build-stage
 
 ARG VERSION
 
