@@ -130,7 +130,7 @@ Build the image locally using this git repository as the [build context](https:/
 
 ```console
 docker build \
-  --build-arg VERSION=0.0.1 \
+  --build-arg VERSION=1.4.0 \
   --tag cisagov/admiral:1.4.0 \
   https://github.com/cisagov/admiral-docker.git#develop
 ```
@@ -161,6 +161,7 @@ Docker:
     docker buildx build \
       --file Dockerfile-x \
       --platform linux/amd64 \
+      --build-arg VERSION=1.4.0 \
       --output type=docker \
       --tag cisagov/admiral:1.4.0 .
     ```
