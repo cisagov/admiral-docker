@@ -7,7 +7,7 @@
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/cisagov/admiral)](https://hub.docker.com/r/cisagov/admiral)
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/cisagov/admiral)](https://hub.docker.com/r/cisagov/admiral)
-[![Platforms](https://img.shields.io/badge/platforms-386%20%7C%20amd64%20%7C%20arm%2Fv6%20%7C%20arm%2Fv7%20%7C%20arm64%20%7C%20ppc64le%20%7C%20riscv64%20%7C%20s390x-blue)](https://hub.docker.com/r/cisagov/admiral-docker/tags)
+[![Platforms](https://img.shields.io/badge/platforms-386%20%7C%20amd64%20%7C%20arm%2Fv6%20%7C%20arm%2Fv7%20%7C%20arm64%20%7C%20ppc64le%20%7C%20s390x-blue)](https://hub.docker.com/r/cisagov/admiral-docker/tags)
 
 This Docker project serves as the vessel for certificate transparency
 scanning performed by the [admiral Python library](https://github.com/cisagov/admiral).
