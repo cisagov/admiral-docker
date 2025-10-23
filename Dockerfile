@@ -61,11 +61,7 @@ RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
 # This results in a smaller final image, at the cost of slightly
 # longer install times.
 ###
-ENV DEPS \
-    ca-certificates \
-    make \
-    openssl \
-    py-pip
+ENV DEPS="ca-certificates make openssl py-pip"
 ARG TARGET_PLATFORM
 RUN xx-apk --no-cache --quiet add ${DEPS}
 
