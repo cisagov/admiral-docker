@@ -1,9 +1,11 @@
 ARG PYTHON_IMAGE_VERSION=3.11.2-alpine
 ARG VERSION=1.4.0
 
-FROM tonistiigi/xx AS xx
+# Official Docker images are in the form library/<app> while non-official
+# images are in the form <user>/<app>.
+FROM docker.io/tonistiigi/xx AS xx
 
-FROM python:${PYTHON_IMAGE_VERSION} as build-stage
+FROM docker.io/library/python:${PYTHON_IMAGE_VERSION} as build-stage
 
 ARG VERSION
 
