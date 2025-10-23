@@ -18,7 +18,7 @@ def dockerc():
     """Start up the Docker composition."""
     # Create the Docker client with our project name and compose file path
     docker = DockerClient(
-        compose_files=["./docker-compose.yml"], compose_project_name=MAIN_SERVICE_NAME
+        compose_files=["./compose.yml"], compose_project_name=MAIN_SERVICE_NAME
     )
     docker.compose.up(detach=True)
     yield docker
