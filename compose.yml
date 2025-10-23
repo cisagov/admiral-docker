@@ -98,6 +98,7 @@ services:
   admiral-version:
     # Run the container to collect version information
     <<: *admiral-template
+    command: --version
     deploy:
       mode: global
     restart: "no"
