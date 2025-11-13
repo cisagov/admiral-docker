@@ -6,7 +6,7 @@ name = "pypi"
 # List any Python dependencies for the image here
 [packages]
 # This should match the version of the image
-admiral = {file = "https://github.com/cisagov/admiral/archive/v1.4.0.tar.gz"}
+admiral = {file = "https://github.com/cisagov/admiral/archive/v2.2.0.tar.gz"}
 
 # This version should match the version of Python in the image
 [requires]
