@@ -1,7 +1,7 @@
 {
   "_meta": {
     "hash": {
-      "sha256": "8b7df5b8f39244a39cca6a5731549434e7c971549f509df05336b26c4023289e"
+      "sha256": "944784ab5e8dd6c8b597fb4c058cf066d13867c46d0490cf21379b717bf22f1a"
     },
     "pipfile-spec": 6,
     "requires": {
@@ -17,7 +17,7 @@
   },
   "default": {
     "admiral": {
-      "file": "https://github.com/cisagov/admiral/archive/v2.2.0.tar.gz"
+      "file": "https://github.com/cisagov/admiral/archive/v2.2.1-rc.1.tar.gz"
     },
     "amqp": {
       "hashes": [
@@ -36,6 +36,9 @@
       "version": "==4.2.2"
     },
     "celery": {
+      "extras": [
+        "redis"
+      ],
       "hashes": [
         "sha256:0b5761a07057acee94694464ca482416b959568904c9dfa41ce8413a7d65d525",
         "sha256:6c972ae7968c2b5281227f01c3a3f984037d21c5129d07bf3550cc2afc6b10a5"
@@ -382,6 +385,9 @@
       "version": "==3.11"
     },
     "kombu": {
+      "extras": [
+        "redis"
+      ],
       "hashes": [
         "sha256:886600168275ebeada93b888e831352fe578168342f0d1d5833d88ba0d847363",
         "sha256:a12ed0557c238897d8e518f1d1fdf84bd1516c5e305af2dacd85c2015115feb8"
@@ -575,11 +581,11 @@
     },
     "redis": {
       "hashes": [
-        "sha256:4977af3c7d67f8f0eb8b6fec0dafc9605db9343142f634041fb0235f67c0588a",
-        "sha256:c949df947dca995dc68fdf5a7863950bf6df24f8d6022394585acc98e81624f1"
+        "sha256:16f2e22dff21d5125e8481515e386711a34cbec50f0e44413dd7d9c060a54e0f",
+        "sha256:ee7e1056b9aea0f04c6c2ed59452947f34c4940ee025f5dd83e6a6418b6989e4"
       ],
-      "markers": "python_version >= '3.9'",
-      "version": "==7.0.1"
+      "markers": "python_version >= '3.8'",
+      "version": "==5.2.1"
     },
     "requests": {
       "hashes": [
