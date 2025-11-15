@@ -1,5 +1,5 @@
-ARG PYTHON_IMAGE_VERSION=3.11.2-alpine
-ARG VERSION=2.2.0
+ARG PYTHON_IMAGE_VERSION=3.11.14-alpine
+ARG VERSION=2.2.1
 
 # Official Docker images are in the form library/<app> while non-official
 # images are in the form <user>/<app>.

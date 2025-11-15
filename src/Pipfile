@@ -10,4 +10,4 @@ admiral = {file = "https://github.com/cisagov/admiral/archive/v2.2.1.tar.gz"}
 
 # This version should match the version of Python in the image
 [requires]
-python_full_version = "3.11.2"
+python_full_version = "3.11.14"
