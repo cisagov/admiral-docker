@@ -10,7 +10,7 @@ set -o pipefail
 # Stores the canonical version for the project.
 VERSION_FILE=src/version.txt
 # Files that should be updated with the new version.
-VERSION_FILES=("$VERSION_FILE" README.md)
+VERSION_FILES=("$VERSION_FILE" Dockerfile README.md src/Pipfile)
 
 USAGE=$(
   cat << END_OF_LINE
