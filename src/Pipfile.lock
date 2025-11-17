@@ -1,7 +1,7 @@
 {
   "_meta": {
     "hash": {
-      "sha256": "944784ab5e8dd6c8b597fb4c058cf066d13867c46d0490cf21379b717bf22f1a"
+      "sha256": "f9ce1ada99c82a8d12037f465659ecdfa674461a7aa93b5f7a87c7c3f1efa6e5"
     },
     "pipfile-spec": 6,
     "requires": {
@@ -17,7 +17,7 @@
   },
   "default": {
     "admiral": {
-      "file": "https://github.com/cisagov/admiral/archive/v2.2.1-rc.1.tar.gz"
+      "file": "https://github.com/cisagov/admiral/archive/v2.2.1.tar.gz"
     },
     "amqp": {
       "hashes": [
@@ -29,11 +29,11 @@
     },
     "billiard": {
       "hashes": [
-        "sha256:4bc05dcf0d1cc6addef470723aac2a6232f3c7ed7475b0b580473a9145829457",
-        "sha256:e815017a062b714958463e07ba15981d802dc53d41c5b69d28c5a7c238f8ecf3"
+        "sha256:96486f0885afc38219d02d5f0ccd5bec8226a414b834ab244008cbb0025b8dcb",
+        "sha256:989e9b688e3abf153f307b68a1328dfacfb954e30a4f920005654e276c69236b"
       ],
       "markers": "python_version >= '3.7'",
-      "version": "==4.2.2"
+      "version": "==4.2.3"
     },
     "celery": {
       "extras": [
@@ -265,11 +265,11 @@
     },
     "click": {
       "hashes": [
-        "sha256:9b9f285302c6e3064f4330c05f05b81945b2a39544279343e6e7c5f27a9baddc",
-        "sha256:e7b8232224eba16f4ebe410c25ced9f7875cb5f3263ffc93cc3e8da705e229c4"
+        "sha256:12ff4785d337a1bb490bb7e9c2b1ee5da3112e94a8622f26a6c77f5d2fc6842a",
+        "sha256:981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6"
       ],
       "markers": "python_version >= '3.10'",
-      "version": "==8.3.0"
+      "version": "==8.3.1"
     },
     "click-didyoumean": {
       "hashes": [
