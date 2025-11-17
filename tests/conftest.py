@@ -2,6 +2,7 @@
 
 https://docs.pytest.org/en/latest/writing_plugins.html#conftest-py-plugins
 """
+
 # Third-Party Libraries
 import pytest
 from python_on_whales import DockerClient
@@ -9,13 +10,15 @@ from python_on_whales import DockerClient
 MAIN_SERVICE_NAME = "admiral"
 VERSION_SERVICE_NAME = f"{MAIN_SERVICE_NAME}-version"
 
+VERSION_FILE = "src/version.txt"
+
 
 @pytest.fixture(scope="session")
 def dockerc():
     """Start up the Docker composition."""
     # Create the Docker client with our project name and compose file path
     docker = DockerClient(
-        compose_files=["./docker-compose.yml"], compose_project_name=MAIN_SERVICE_NAME
+        compose_files=["./compose.yml"], compose_project_name=MAIN_SERVICE_NAME
     )
     docker.compose.up(detach=True)
     yield docker
@@ -38,6 +41,14 @@ def version_container(dockerc):
     """
     # find the container by name even if it is stopped already
     return dockerc.compose.ps(services=[VERSION_SERVICE_NAME], all=True)[0]
+
+
+@pytest.fixture(scope="session")
+def project_version():
+    """Return the version of the project."""
+    with open(VERSION_FILE) as f:
+        project_version = f.read().strip()
+    return project_version
 
 
 def pytest_addoption(parser):

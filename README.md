@@ -2,13 +2,12 @@
 
 [![GitHub Build Status](https://github.com/cisagov/admiral-docker/workflows/build/badge.svg)](https://github.com/cisagov/admiral-docker/actions/workflows/build.yml)
 [![CodeQL](https://github.com/cisagov/admiral-docker/workflows/CodeQL/badge.svg)](https://github.com/cisagov/admiral-docker/actions/workflows/codeql-analysis.yml)
-[![Known Vulnerabilities](https://snyk.io/test/github/cisagov/admiral-docker/badge.svg)](https://snyk.io/test/github/cisagov/admiral-docker)
 
 ## Docker Image ##
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/cisagov/admiral)](https://hub.docker.com/r/cisagov/admiral)
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/cisagov/admiral)](https://hub.docker.com/r/cisagov/admiral)
-[![Platforms](https://img.shields.io/badge/platforms-amd64%20%7C%20arm%2Fv6%20%7C%20arm%2Fv7%20%7C%20arm64%20%7C%20ppc64le%20%7C%20s390x-blue)](https://hub.docker.com/r/cisagov/admiral-docker/tags)
+[![Platforms](https://img.shields.io/badge/platforms-386%20%7C%20amd64%20%7C%20arm%2Fv6%20%7C%20arm%2Fv7%20%7C%20arm64%20%7C%20ppc64le%20%7C%20s390x-blue)](https://hub.docker.com/r/cisagov/admiral-docker/tags)
 
 This Docker project serves as the vessel for certificate transparency
 scanning performed by the [admiral Python library](https://github.com/cisagov/admiral).
@@ -35,7 +34,7 @@ The following web services are started for monitoring the underlying components:
 
 ## Using secrets ##
 
-This composistion passes credentials and configuration options via [Docker
+This composition passes credentials and configuration options via [Docker
 secrets](https://docs.docker.com/engine/swarm/secrets/). You need to modify
 the files listed in the [secrets](#secrets) section below. To prevent yourself
 from inadvertently committing sensitive values to the repository, run
@@ -62,13 +61,13 @@ from inadvertently committing sensitive values to the repository, run
 The images of this container are tagged with [semantic
 versions](https://semver.org) of the [admiral](https://github.com/cisagov/admiral)
 Python library that they containerize.  It is recommended that most users
-use a version tag (e.g. `:1.4.0`).
+use a version tag (e.g. `:2.2.1`).
 
 | Image:tag | Description |
 |-----------|-------------|
-|`cisagov/admiral:1.4.0`| An exact release version. |
-|`cisagov/admiral:1.3`| The most recent release matching the major and minor version numbers. |
-|`cisagov/admiral:1`| The most recent release matching the major version number. |
+|`cisagov/admiral:2.2.1`| An exact release version. |
+|`cisagov/admiral:2.2`| The most recent release matching the major and minor version numbers. |
+|`cisagov/admiral:2`| The most recent release matching the major version number. |
 |`cisagov/admiral:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
 |`cisagov/admiral:nightly` | A nightly build of the `develop` branch of this repository. |
 |`cisagov/admiral:latest`| The most recent release image pushed to a container registry.  Pulling an image using the `:latest` tag [should be avoided.](https://vsupalov.com/docker-latest-tag/) |
@@ -131,8 +130,8 @@ Build the image locally using this git repository as the [build context](https:/
 
 ```console
 docker build \
-  --build-arg VERSION=0.0.1 \
-  --tag cisagov/admiral:1.4.0 \
+  --build-arg VERSION=2.2.1 \
+  --tag cisagov/admiral:2.2.1 \
   https://github.com/cisagov/admiral-docker.git#develop
 ```
 
@@ -162,9 +161,9 @@ Docker:
     docker buildx build \
       --file Dockerfile-x \
       --platform linux/amd64 \
-      --build-arg VERSION=0.0.1 \
+      --build-arg VERSION=2.2.1 \
       --output type=docker \
-      --tag cisagov/admiral:1.4.0 .
+      --tag cisagov/admiral:2.2.1 .
     ```
 
 ## Contributing ##

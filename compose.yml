@@ -1,7 +1,7 @@
 ---
-version: "3.7"
-
 # This Docker composition file is used to build and test the container
+
+name: admiral-docker
 
 secrets:
   admiral_yml:
@@ -21,7 +21,7 @@ x-admiral-template: &admiral-template
     mode: replicated
     replicas: 5
   environment:
-    ADMIRAL_CONFIG_FILE: "/run/secrets/admiral.yml"
+    ADMIRAL_CONFIG_FILE: /run/secrets/admiral.yml
     ADMIRAL_CONFIG_SECTION: dev-mode
     ADMIRAL_WORKER_NAME: dev
   image: cisagov/admiral
@@ -35,10 +35,10 @@ x-admiral-template: &admiral-template
 services:
   celery-flower:
     environment:
-      CELERY_BROKER_URL: "redis://:fruitcake@redis:6379/0"
+      CELERY_BROKER_URL: redis://:fruitcake@redis:6379/0
     image: mher/flower:1.2
     ports:
-      - "5555:5555"
+      - 5555:5555
 
   cert-worker:
     <<: *admiral-template
@@ -65,16 +65,16 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
     image: mongo-express:0.54
     ports:
-      - "8083:8081"
+      - 8083:8081
     restart: always
 
   redis:
     command:
-      - "redis-server"
-      - "/run/secrets/redis_conf"
+      - redis-server
+      - /run/secrets/redis_conf
     image: redis:7.0-alpine
     ports:
-      - "6379:6379"
+      - 6379:6379
     secrets:
       - source: redis_conf
 
@@ -82,11 +82,11 @@ services:
     depends_on:
       - redis
     environment:
-      REDIS_HOSTS: "default:redis:6379:0:fruitcake"
+      REDIS_HOSTS: default:redis:6379:0:fruitcake
     hostname: redis-commander
     image: ghcr.io/joeferner/redis-commander:0.8
     ports:
-      - "8082:8081"
+      - 8082:8081
     restart: always
 
   scanner-worker:
@@ -98,7 +98,7 @@ services:
   admiral-version:
     # Run the container to collect version information
     <<: *admiral-template
+    command: --version
     deploy:
       mode: global
     restart: "no"
-    command: --version

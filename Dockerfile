@@ -1,9 +1,62 @@
-ARG PYTHON_IMAGE_VERSION=3.11.2-alpine
-ARG VERSION=1.4.0
+ARG PYTHON_IMAGE_VERSION=3.11.14-alpine
+ARG VERSION=2.2.1
 
-FROM tonistiigi/xx AS xx
+# Official Docker images are in the form library/<app> while non-official
+# images are in the form <user>/<app>.
+FROM docker.io/library/python:${PYTHON_IMAGE_VERSION} AS compile-stage
 
-FROM python:${PYTHON_IMAGE_VERSION} as build-stage
+###
+# Unprivileged user variables
+###
+ARG CISA_USER="cisa"
+ENV CISA_HOME="/home/${CISA_USER}"
+ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
+
+# Versions of the Python packages installed directly
+ENV PYTHON_PIP_VERSION=25.3
+ENV PYTHON_PIPENV_VERSION=2025.0.4
+ENV PYTHON_SETUPTOOLS_VERSION=80.9.0
+ENV PYTHON_WHEEL_VERSION=0.45.1
+
+###
+# Install the specified versions of pip, setuptools, and wheel;
+# install the specified version of pipenv; create the image dependency
+# venv; and install the specified versions of pip, setuptools, and
+# wheel into the dependency venv.
+#
+# Note that we use the --no-cache-dir flag to avoid writing to a local
+# cache.  This results in a smaller final image, at the cost of
+# slightly longer install times.
+###
+RUN python3 -m pip install --no-cache-dir --upgrade \
+        pip==${PYTHON_PIP_VERSION} \
+        setuptools==${PYTHON_SETUPTOOLS_VERSION} \
+        wheel==${PYTHON_WHEEL_VERSION} \
+    && python3 -m pip install --no-cache-dir --upgrade \
+        pipenv==${PYTHON_PIPENV_VERSION} \
+    # Manually create the virtual environment
+    && python3 -m venv ${VIRTUAL_ENV} \
+    # Ensure the core Python packages are installed in the virtual environment
+    && ${VIRTUAL_ENV}/bin/python3 -m pip install --no-cache-dir --upgrade \
+        pip==${PYTHON_PIP_VERSION} \
+        setuptools==${PYTHON_SETUPTOOLS_VERSION} \
+        wheel==${PYTHON_WHEEL_VERSION}
+
+###
+# Install the Python dependencies into the virtual environment.
+#
+# Note that pipenv will install into a virtual environment if the VIRTUAL_ENV
+# environment variable is set.
+###
+WORKDIR /tmp
+COPY src/Pipfile src/Pipfile.lock ./
+RUN pipenv install --clear --deploy --extra-pip-args "--no-cache-dir" --verbose
+
+# Official Docker images are in the form library/<app> while non-official
+# images are in the form <user>/<app>.
+FROM docker.io/tonistiigi/xx AS xx
+
+FROM docker.io/library/python:${PYTHON_IMAGE_VERSION} AS build-stage
 
 ARG VERSION
 
@@ -25,6 +78,7 @@ ARG CISA_GID=${CISA_UID}
 ARG CISA_USER="cisa"
 ENV CISA_GROUP=${CISA_USER}
 ENV CISA_HOME="/home/${CISA_USER}"
+ENV VIRTUAL_ENV="${CISA_HOME}/.venv"
 
 ###
 # Admiral configuration variables
@@ -59,42 +113,25 @@ RUN addgroup --system --gid ${CISA_GID} ${CISA_GROUP} \
 # This results in a smaller final image, at the cost of slightly
 # longer install times.
 ###
-ENV DEPS \
-    ca-certificates \
-    make \
-    openssl \
-    py-pip
+ENV DEPS="ca-certificates make openssl py-pip"
 ARG TARGET_PLATFORM
 RUN xx-apk --no-cache --quiet add ${DEPS}
 
-###
-# Make sure pip, setuptools, and wheel are the latest versions
+# Copy in the Python virtual environment created in compile-stage, symlink the
+# Python binary in the venv to the system-wide Python, and add the venv to the PATH.
 #
-# Note that we use pip3 --no-cache-dir to avoid writing to a local
-# cache.  This results in a smaller final image, at the cost of
-# slightly longer install times.
+# Note that we symlink the Python binary in the venv to the system-wide Python so that
+# any calls to `python3` will use our virtual environment. We are using short flags
+# because the ln binary in Alpine Linux does not support long flags. The -f instructs
+# ln to remove the existing file and the -s instructs ln to create a symbolic link.
 ###
-RUN pip3 install --no-cache-dir --upgrade \
-    pip \
-    setuptools \
-    wheel
-
-WORKDIR ${CISA_HOME}
-
-###
-# Install Python dependencies
-#
-# Note that we use pip3 --no-cache-dir to avoid writing to a local
-# cache.  This results in a smaller final image, at the cost of
-# slightly longer install times.
-###
-RUN wget --output-document sourcecode.tgz \
-    https://github.com/cisagov/admiral/archive/v${VERSION}.tar.gz \
-    && tar --extract --gzip --file sourcecode.tgz --strip-components=1 \
-    && pip3 install --no-cache-dir --requirement requirements.txt
+COPY --from=compile-stage --chown=${CISA_USER}:${CISA_GROUP} ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+RUN ln -fs "$(command -v python3)" "${VIRTUAL_ENV}"/bin/python3
+ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
 
 ###
 # Prepare to run
 ###
+WORKDIR ${CISA_HOME}
 USER ${CISA_USER}:${CISA_GROUP}
 ENTRYPOINT ["admiral"]
