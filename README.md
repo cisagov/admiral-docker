@@ -66,8 +66,8 @@ use a version tag (e.g. `:3.0.0`).
 | Image:tag | Description |
 |-----------|-------------|
 |`cisagov/admiral:3.0.0`| An exact release version. |
-|`cisagov/admiral:2.2`| The most recent release matching the major and minor version numbers. |
-|`cisagov/admiral:2`| The most recent release matching the major version number. |
+|`cisagov/admiral:3.0`| The most recent release matching the major and minor version numbers. |
+|`cisagov/admiral:3`| The most recent release matching the major version number. |
 |`cisagov/admiral:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
 |`cisagov/admiral:nightly` | A nightly build of the `develop` branch of this repository. |
 |`cisagov/admiral:latest`| The most recent release image pushed to a container registry.  Pulling an image using the `:latest` tag [should be avoided.](https://vsupalov.com/docker-latest-tag/) |
