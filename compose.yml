@@ -63,7 +63,7 @@ services:
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
-    image: mongo-express:0.54
+    image: mongo-express:1-18
     ports:
       - 8083:8081
     restart: always
