@@ -51,7 +51,7 @@ services:
       MONGO_INITDB_DATABASE: certs
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongo_root_passwd_txt
-    image: mongo:4.2
+    image: mongo:8.2
     restart: always
     secrets:
       - source: mongo_root_passwd_txt
