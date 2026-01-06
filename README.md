@@ -1,6 +1,7 @@
 # admiral-docker 💀🐳 #
 
 [![GitHub Build Status](https://github.com/cisagov/admiral-docker/workflows/build/badge.svg)](https://github.com/cisagov/admiral-docker/actions/workflows/build.yml)
+[![License](https://img.shields.io/github/license/cisagov/admiral-docker)](https://spdx.org/licenses/)
 [![CodeQL](https://github.com/cisagov/admiral-docker/workflows/CodeQL/badge.svg)](https://github.com/cisagov/admiral-docker/actions/workflows/codeql-analysis.yml)
 
 ## Docker Image ##
