@@ -25,7 +25,9 @@ def dockerc():
     docker.compose.down()
 
 
-# The Admiral's Docker composition does not define a main container. This part of the configuration needs to be modified to play nicely with the worker replicas. See #6 for more details.
+# The Admiral's Docker composition does not define a main
+# container. This part of the configuration needs to be modified to
+# play nicely with the worker replicas. See #6 for more details.
 #  @pytest.fixture(scope="session")
 #  def main_container(dockerc):
 #      """Return the main container from the Docker composition."""
