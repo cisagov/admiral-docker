@@ -20,16 +20,17 @@ def test_container_count(dockerc):
 # TODO: Implement this test. See cisagov/admiral-docker#6 for more details.
 # def test_wait_for_ready(main_container):
 #     """Wait for container to be ready."""
-#     TIMEOUT = 10
-#     for i in range(TIMEOUT):
+#     timeout = 10
+#     for _i in range(timeout):
 #         if READY_MESSAGE in main_container.logs():
 #             break
 #         time.sleep(1)
 #     else:
 #         raise Exception(
 #             f"Container does not seem ready.  "
-#             f'Expected "{READY_MESSAGE}" in the log within {TIMEOUT} seconds.'
+#             f'Expected "{READY_MESSAGE}" in the log within {timeout} seconds.'
 #         )
+
 
 # TODO: Implement this assertion. See cisagov/admiral-docker#6 for more details.
 # def test_wait_for_exits(dockerc, main_container, version_container):
